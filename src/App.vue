@@ -18,14 +18,19 @@ export default {
     methods: {
       getFilm () {
         let Api ="https://api.themoviedb.org/3/search/movie?api_key=0b7beefdc6081f07c67886d72aa3b026";
+        let ApiSeries="https://api.themoviedb.org/3/search/tv?api_key=0b7beefdc6081f07c67886d72aa3b026"
+
         Api += `&query=${this.store.filter}`;
-        console.log(this.store.filter);
-        console.log(Api);
+        ApiSeries += `&query=${this.store.filter}`
+
         axios.get(Api)
         .then(response => {
-          this.store.FilmList = response.data.results
+          this.store.FilmList = response.data.results;
         })
-
+        axios.get(ApiSeries)
+        .then(response => {
+          this.store.SeriesList = response.data.results;
+        })
         }
 
       }

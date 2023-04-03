@@ -6,8 +6,9 @@
             return {
                 store
             }
-        }
-    }
+        },
+
+}
 </script>
 
 <template>

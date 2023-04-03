@@ -6,32 +6,72 @@
             return {
                 store
             }
+        },
+        computed: {
+            getFlag() {
+              return function(country) {
+                const flags = {
+                "it": "https://www.countryflagicons.com/SHINY/64/IT.png",
+                "en": "https://www.countryflagicons.com/SHINY/64/GB.png",
+                "de": "https://www.countryflagicons.com/SHINY/64/DE.png",
+                "us": "https://www.countryflagicons.com/SHINY/64/US.png",
+                };
+                return flags[country] || "https://www.countryflagicons.com/SHINY/64/EU.png";
+              };
+            },
+            GetThumb() {
+              return function(elemento) {
+                const thumb = "https://image.tmdb.org/t/p/original";
+                thumb += elemento.poster_path;
+                return thumb;
+
+              }
+            }
         }
     }
 </script>
 
 <template>
 <div class="container">
+  <div>Film</div>
+  <div class="FilmAndSeriesContainer">
     <div class="cardBox" v-for="(element, index) in this.store.FilmList">
+        <div class="card" >
+            <span class="text">
+                <img :src="GetThumb(element.poster_path)" alt="">
+            </span>
+            <div class="content">
+                <h1>{{ element.title }}</h1>
+                <h2>{{ element.original_title }}</h2>
+                <img :src="getFlag(element.original_language)" alt="">
+                <h4>{{ element.vote_average }}</h4>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div>Serie Tv</div>
+  <div class="FilmAndSeriesContainer">
+    <div class="cardBox" v-for="(element, index) in this.store.SeriesList">
         <div class="card" >
             <span class="text">
                 <img src="" alt="">
             </span>
             <div class="content">
-                <h1>{{ element.title }}</h1>
-                <h2>{{ element.original_title }}</h2>
-                <h4>{{ element.original_language }}</h4>
+                <h1>{{ element.name }}</h1>
+                <h2>{{ element.original_name }}</h2>
+                <img :src="getFlag(element.original_language)" alt="">
                 <h4>{{ element.vote_average }}</h4>
             </div>
         </div>
     </div>
+  </div>
 </div>
 
 </template>
 
 <style scoped lang="scss">
 
-.container {
+.FilmAndSeriesContainer {
     display: flex;
     flex-wrap: wrap;
 }
