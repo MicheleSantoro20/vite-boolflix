@@ -33,8 +33,11 @@ export default {
         })
         }
 
+      },
+      created() {
+        this.getFilm()
       }
-    }
+}
 
 </script>
 

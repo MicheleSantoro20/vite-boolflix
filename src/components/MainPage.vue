@@ -31,7 +31,7 @@
               return function(elemento) {
                 let thumb = "https://image.tmdb.org/t/p/original";
                 thumb += elemento.poster_path;
-                if (elemento.poster_path == "Null") {
+                if (elemento.poster_path == null) {
                   thumb = "https://www.onthisday.com/images/people/homer-simpson-medium.jpg";
                 }
                 return thumb;
@@ -215,7 +215,8 @@ h1 {
 .divider {
   font-size: 50px;
   color: #0004ff;
-  margin-left: 100px;
+  margin: 50px 100px;
+  font-family: 'Orbitron', sans-serif;
 }
 
 </style>
