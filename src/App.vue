@@ -39,10 +39,14 @@ export default {
 </script>
 
 <template>
-  <AppHeader @searching="getFilm()"/>
-  <MainPage />
+  <div class="body-wrapper">
+    <AppHeader @searching="getFilm()"/>
+    <MainPage />
+  </div>
+
 </template>
 
-<style scoped lang="scss">
-  @use "./styles/general.scss";
+<style lang="scss">
+@use "./styles/general.scss";
+
 </style>

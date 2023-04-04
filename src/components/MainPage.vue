@@ -1,11 +1,19 @@
 <script>
     import { store } from '../store.js'
+
+
     export default {
         name: "MainPage",
         data () {
             return {
                 store
             }
+        },
+        methods: {
+            Rating(element) {
+                let Rate = Math.ceil(element / 2);
+                return Rate
+              },
         },
         computed: {
             getFlag() {
@@ -21,46 +29,69 @@
             },
             GetThumb() {
               return function(elemento) {
-                const thumb = "https://image.tmdb.org/t/p/original";
+                let thumb = "https://image.tmdb.org/t/p/original";
                 thumb += elemento.poster_path;
+                if (elemento.poster_path == "Null") {
+                  thumb = "https://www.onthisday.com/images/people/homer-simpson-medium.jpg";
+                }
                 return thumb;
 
               }
-            }
+            },
+
         }
     }
 </script>
 
 <template>
 <div class="container">
-  <div>Film</div>
+
+  <div class="divider">Film</div>
+
+  <!--Card relative ai film-->
   <div class="FilmAndSeriesContainer">
     <div class="cardBox" v-for="(element, index) in this.store.FilmList">
         <div class="card" >
             <span class="text">
-                <img :src="GetThumb(element.poster_path)" alt="">
+                <img class="thumb" :src="GetThumb(element)" alt="">
             </span>
             <div class="content">
                 <h1>{{ element.title }}</h1>
                 <h2>{{ element.original_title }}</h2>
                 <img :src="getFlag(element.original_language)" alt="">
-                <h4>{{ element.vote_average }}</h4>
+                <h4>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 1? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 2? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 3? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 4? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) == 5? 'fa-solid':'fa-regular' "></i> 
+                </h4>
             </div>
         </div>
     </div>
   </div>
-  <div>Serie Tv</div>
+
+
+  <div class="divider">Serie Tv</div>
+
+    <!--Card relative alle Serie tv-->
   <div class="FilmAndSeriesContainer">
     <div class="cardBox" v-for="(element, index) in this.store.SeriesList">
         <div class="card" >
             <span class="text">
-                <img src="" alt="">
+                <img class="thumb" :src="GetThumb(element)" alt="">
             </span>
             <div class="content">
                 <h1>{{ element.name }}</h1>
                 <h2>{{ element.original_name }}</h2>
                 <img :src="getFlag(element.original_language)" alt="">
-                <h4>{{ element.vote_average }}</h4>
+                <h4>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 1? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 2? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 3? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) >= 4? 'fa-solid':'fa-regular' "></i>
+                  <i class="fa-star" :class="Rating(element.vote_average) == 5? 'fa-solid':'fa-regular' "></i> 
+                </h4>
             </div>
         </div>
     </div>
@@ -71,8 +102,12 @@
 
 <style scoped lang="scss">
 
+.thumb {
+  width: 100%;
+}
 .FilmAndSeriesContainer {
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 
@@ -89,6 +124,7 @@ h1 {
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
     rgba(0, 0, 0, 0.5) 0px 2px 25px 0px;
+  margin: 10px;
 }
 
 .card {
@@ -119,7 +155,8 @@ h1 {
   font-size: 3rem;
   font-weight: 800;
   pointer-events: none;
-  opacity: 0.1;
+  opacity: 1;
+  
 }
 
 .text {
@@ -153,11 +190,16 @@ h1 {
   width: 40%;
   height: 150%;
   background: #40E0D0;
-  background: -webkit-linear-gradient(to right, #088c13, #FF8C00, #40E0D0);
-  background: linear-gradient(to right, #04a329, #FF8C00, #40E0D0);
+  background: -webkit-linear-gradient(to right, #8c1308, #0004ff, #9b1003);
+  background: linear-gradient(to right, #ffffff, #0004ff, #9b1003);
   animation: glowing01 5s linear infinite;
   transform-origin: center;
   animation: glowing 5s linear infinite;
+}
+
+.card:hover span {
+    opacity: 0.1;
+    transition: 0.3s ease-in-out
 }
 
 @keyframes glowing {
@@ -168,6 +210,12 @@ h1 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.divider {
+  font-size: 50px;
+  color: #0004ff;
+  margin-left: 100px;
 }
 
 </style>
